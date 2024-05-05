@@ -7,7 +7,7 @@ namespace ApplesGame {
 
 	class Game {
 	public:
-		Game(Resources& resources, MainMenu& mainMenu, sf::RenderWindow& window);
+		Game(Resources& resources, sf::RenderWindow& window);
 
 		void initGame();
 		void restartGame();
@@ -18,6 +18,8 @@ namespace ApplesGame {
 	private:
 		sf::RenderWindow& window_;
 		Resources& resources_;
-		MainMenu& mainMenu_;
+		MainMenu mainMenu_;
+		ExitMenu exitMenu_;
+		Settings settings_;
 	};
 }

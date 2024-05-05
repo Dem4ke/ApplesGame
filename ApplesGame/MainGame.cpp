@@ -10,10 +10,9 @@ int main() {
 
 	// Game initialization
 	ApplesGame::Resources resources{ 600.f, 400.f };
-	ApplesGame::MainMenu menu{ resources };
 	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Apples Game!");
 
-	ApplesGame::Game game{ resources, menu, window };
+	ApplesGame::Game game{ resources, window };
 
 	game.initGame();
 
@@ -40,10 +39,7 @@ int main() {
 				window.close();
 				break;
 			}
-			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-				window.close();
-				break;
-			}
+
 			game.updateGame(deltaTime, event);
 		}
 

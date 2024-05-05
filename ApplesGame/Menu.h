@@ -13,37 +13,29 @@ namespace ApplesGame {
 		LeaderBoard,
 	};
 
-	class Menu {
-	public:
-		Menu(Resources& resources) : resources_(resources) {}
-
-	protected:
-		Resources& resources_;
-	};
-
 	class MainMenu {
 	public:
 		MainMenu(Resources& resources) : resources_(resources) {}
 
-		void Init(std::vector<std::string>& allButtons, int buttonSize);
-		void Draw(sf::RenderWindow& window);
+		void init(std::string gameName, std::vector<std::string>& allButtons, int buttonSize);
+		void moveUp();
+		void moveDown();
+
+		size_t getButtonsCount() const;
+		sf::Text getButton(int num) const;
+		sf::Text getGameName() const;
+		sf::RectangleShape getBackground() const;
 	private:
-		Resources resources_;
-		sf::RenderWindow window_;
+		char gameState_ = 0;
+		int selectedButton_ = 0;
+
 		std::vector<sf::Text> buttons_;
+		sf::Text gameName_;
+		sf::RectangleShape background;
+		
+		Resources& resources_;
 	};
 
-	class PauseMenu : public Menu {
-	public:
-		PauseMenu(Resources& resources) : Menu(resources) {}
-	private:
-		std::vector<sf::Text> buttons_;
-	};
-
-	class GameOverMenu : public Menu {
-	public:
-		GameOverMenu(Resources& resources) : Menu(resources) {}
-	private:
-		std::vector<sf::Text> buttons_;
-	};
+	void MenuMovement(MainMenu& menu, const sf::Event& event);
+	void DrawMenu(MainMenu& menu, sf::RenderWindow& window);
 }

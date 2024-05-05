@@ -25,6 +25,15 @@
     <ClCompile Include="Settings.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -40,6 +49,15 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

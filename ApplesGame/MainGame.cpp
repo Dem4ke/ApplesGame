@@ -1,27 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "Resources.h"
 #include "Game.h"
-#include "Menu.h"
 
 int main() {
 
 	int seed = (int)time(nullptr);
 	srand(seed);
 
-	// Initializaton window 
-	ApplesGame::Resources resources{ 600.f, 400.f };
-	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Apples Game!");
-	ApplesGame::MainMenu mainMenu{ resources, window };
-	std::vector<std::string> mainMenuButtons = { "Play game", "Leader Board", "Settings", "Exit" };
-	mainMenu.Init(mainMenuButtons, 40);
-	sf::RectangleShape background;
-	background.setSize(sf::Vector2f(600.f, 400.f));
-	background.setFillColor(sf::Color::Black);
-	background.setPosition(0.f, 0.f);
 	// Game initialization
-	/*ApplesGame::Game game;
-	ApplesGame::InitGame(game);
-	*/
+	ApplesGame::Resources resources{ 600.f, 400.f };
+	ApplesGame::MainMenu menu{ resources };
+	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Apples Game!");
+
+	ApplesGame::Game game{ resources, menu, window };
+
+	game.initGame();
+
 	// Initialization clocks
 	sf::Clock gameClock;
 	float lastTime = gameClock.getElapsedTime().asSeconds();
@@ -37,6 +32,7 @@ int main() {
 		float deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 
+		// OS state checkout
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -48,19 +44,19 @@ int main() {
 				window.close();
 				break;
 			}
+			game.updateGame(deltaTime, event);
 		}
 
 		// Update game state
-		/*ApplesGame::UpdateGame(game, deltaTime);
-		ApplesGame::GameOver(game, deltaTime);
-		*/
+
+	//	ApplesGame::UpdateGame(game, deltaTime);
+	//	ApplesGame::GameOver(game, deltaTime);
+
 		// Draw game
 		window.clear();
-		//ApplesGame::DrawGame(game, window);
-		window.draw(background);
+		game.drawGame();
 		window.display();
 	}
 
 	return 0;
 }
-

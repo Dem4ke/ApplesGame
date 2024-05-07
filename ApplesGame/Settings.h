@@ -23,6 +23,7 @@ namespace ApplesGame {
 	};
 	// Settings 
 	struct Settings {
+		GameOptions gameSettings = GameOptions::Default;
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStates;
 	};

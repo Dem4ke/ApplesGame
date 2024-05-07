@@ -3,13 +3,16 @@
 namespace ApplesGame {
 
 	Game::Game(Resources& resources, sf::RenderWindow& window )
-		: resources_(resources), window_(window), mainMenu_(resources), exitMenu_(resources) {}
+		: resources_(resources), window_(window), mainMenu_(resources), 
+		optionsMenu_ (resources), exitMenu_(resources) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Leader board", "Options", "Exit" };
+		std::vector<std::string> optionsButtons = { "Acceleration: On", "Infinite apples: On" };
 		std::vector<std::string> exitButtons = { "Yes", "No"};
-		mainMenu_.init("Apples Game", mainButtons, 30);
-		exitMenu_.init("Do you want to exit?", exitButtons, 30);
+		mainMenu_.init("Apples Game", mainButtons, 30.f);
+		optionsMenu_.init("Options", optionsButtons, 30.f);
+		exitMenu_.init("Do you want to exit?", exitButtons, 30.f);
 
 		PushGameState(settings_, GameStateType::MainMenu);
 	}
@@ -22,6 +25,9 @@ namespace ApplesGame {
 		if (settings_.gameStateType == GameStateType::MainMenu) {
 			MainMenuMovement(mainMenu_, settings_, event);
 		} 
+		else if (settings_.gameStateType == GameStateType::Options) {
+			OptionsMenuMovement(optionsMenu_, settings_, event);
+		}
 		else if (settings_.gameStateType == GameStateType::ExitDialog) {
 			ExitMenuMovement(exitMenu_, settings_, event, window_);
 		}
@@ -33,10 +39,13 @@ namespace ApplesGame {
 	
 	void Game::drawGame() {
 		if (settings_.gameStateType == GameStateType::MainMenu) {
-			DrawMainMenu(mainMenu_, window_);
+			DrawMenu(mainMenu_, window_);
 		}
 		else if (settings_.gameStateType == GameStateType::ExitDialog) {
-			DrawExitMenu(exitMenu_, window_);
+			DrawMenu(exitMenu_, window_);
+		}
+		else if (settings_.gameStateType == GameStateType::Options) {
+			DrawMenu(optionsMenu_, window_);
 		}
 	}
 }

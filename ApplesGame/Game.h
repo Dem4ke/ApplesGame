@@ -18,8 +18,9 @@ namespace ApplesGame {
 	private:
 		sf::RenderWindow& window_;
 		Resources& resources_;
-		MainMenu mainMenu_;
-		ExitMenu exitMenu_;
+		Menu mainMenu_;
+		Menu optionsMenu_;
+		Menu exitMenu_;
 		Settings settings_;
 	};
 }

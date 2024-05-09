@@ -3,12 +3,9 @@
 
 namespace ApplesGame {
 
-	enum class GameOptions {
-		isApplesUnLimited = 1 << 0,
-		isPlayerAccelerated = 1 << 1,
-
-		Default = isApplesUnLimited | isPlayerAccelerated,
-		Empty = 0
+	enum GameOptions {
+		isPlayerAccelerated = 1,
+		isApplesInfinite = 1 << 1,
 	};
 
 	enum class GameStateType {
@@ -21,9 +18,10 @@ namespace ApplesGame {
 		Options,
 		ExitDialog,
 	};
+
 	// Settings 
 	struct Settings {
-		GameOptions gameSettings = GameOptions::Default;
+		char gameSettings = 0;
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStates;
 	};

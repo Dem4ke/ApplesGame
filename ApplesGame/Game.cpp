@@ -4,15 +4,15 @@ namespace ApplesGame {
 
 	Game::Game(Resources& resources, sf::RenderWindow& window )
 		: resources_(resources), window_(window), mainMenu_(resources), 
-		optionsMenu_ (resources), exitMenu_(resources) {}
+		optionsMenu_ (resources), exitMenu_(resources), player_(resources) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Leader board", "Options", "Exit" };
 		std::vector<std::string> optionsButtons = { "Acceleration: On", "Infinite apples: On" };
 		std::vector<std::string> exitButtons = { "Yes", "No"};
-		mainMenu_.init("Apples Game", mainButtons, 30.f);
-		optionsMenu_.init("Options", optionsButtons, 30.f);
-		exitMenu_.init("Do you want to exit?", exitButtons, 30.f);
+		mainMenu_.init("Apples Game", mainButtons, 40.f);
+		optionsMenu_.init("Options", optionsButtons, 40.f);
+		exitMenu_.init("Do you want to exit?", exitButtons, 40.f);
 
 		PushGameState(settings_, GameStateType::MainMenu);
 	}
@@ -41,11 +41,11 @@ namespace ApplesGame {
 		if (settings_.gameStateType == GameStateType::MainMenu) {
 			DrawMenu(mainMenu_, window_);
 		}
-		else if (settings_.gameStateType == GameStateType::ExitDialog) {
-			DrawMenu(exitMenu_, window_);
-		}
 		else if (settings_.gameStateType == GameStateType::Options) {
 			DrawMenu(optionsMenu_, window_);
+		}
+		else if (settings_.gameStateType == GameStateType::ExitDialog) {
+			DrawMenu(exitMenu_, window_);
 		}
 	}
 }

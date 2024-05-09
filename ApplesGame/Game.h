@@ -1,6 +1,7 @@
 #pragma once
-#include "Menu.h"
 #include "Resources.h"
+#include "Menu.h"
+#include "Player.h"
 #include "Settings.h"
 
 namespace ApplesGame {
@@ -21,6 +22,7 @@ namespace ApplesGame {
 		Menu mainMenu_;
 		Menu optionsMenu_;
 		Menu exitMenu_;
+		Player player_;
 		Settings settings_;
 	};
 }

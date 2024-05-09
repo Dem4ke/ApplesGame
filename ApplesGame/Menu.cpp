@@ -22,7 +22,7 @@ namespace ApplesGame {
 
 		// Initialization of menu's buttons
 		sf::Text menuButtons_;
-		int space = buttonSize;
+		float space = buttonSize;
 		menuButtons_.setFont(resources_.font);
 		menuButtons_.setCharacterSize(buttonSize);
 		menuButtons_.setFillColor(sf::Color::White);
@@ -124,19 +124,21 @@ namespace ApplesGame {
 				if (optionsMenu.getSelectedButton() == 0) {
 					if (optionsMenu.getButton(0).getString() == "Acceleration: On") {
 						optionsMenu.changeButton(0, "Acceleration: Off");
-					//	settings.gameSettings ^ GameOptions::isApplesUnLimited;
+						settings.gameSettings &= ~(GameOptions::isPlayerAccelerated);
 					}
 					else if (optionsMenu.getButton(0).getString() == "Acceleration: Off") {
 						optionsMenu.changeButton(0, "Acceleration: On");
-				//		settings.gameSettings |= GameOptions::isApplesUnLimited;
+						settings.gameSettings |= GameOptions::isPlayerAccelerated;
 					}
 				}
 				else if (optionsMenu.getSelectedButton() == 1) {
 					if (optionsMenu.getButton(1).getString() == "Infinite apples: On") {
 						optionsMenu.changeButton(1, "Infinite apples: Off");
+						settings.gameSettings &= ~(GameOptions::isApplesInfinite);
 					}
 					else if (optionsMenu.getButton(1).getString() == "Infinite apples: Off") {
 						optionsMenu.changeButton(1, "Infinite apples: On");
+						settings.gameSettings |= GameOptions::isApplesInfinite;
 					}
 				}
 			}

@@ -31,7 +31,7 @@
     <ClCompile Include="Rock.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Math.cpp">
+    <ClCompile Include="Engine.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,7 +57,7 @@
     <ClInclude Include="Rock.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
+    <ClInclude Include="Engine.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

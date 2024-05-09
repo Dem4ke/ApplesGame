@@ -9,14 +9,14 @@ int main() {
 	srand(seed);
 
 	// Game initialization
-	ApplesGame::Resources resources{ 600.f, 400.f };
+	ApplesGame::Resources resources{ 800.f, 600.f };
 	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Apples Game!");
 
 	ApplesGame::Game game{ resources, window };
 
 	game.initGame();
 
-	// Initialization clocks
+	// Initialization of clocks
 	sf::Clock gameClock;
 	float lastTime = gameClock.getElapsedTime().asSeconds();
 
@@ -40,12 +40,10 @@ int main() {
 				break;
 			}
 
+			// Update game state
 			game.updateGame(deltaTime, event);
 		}
 
-		// Update game state
-
-	//	ApplesGame::UpdateGame(game, deltaTime);
 	//	ApplesGame::GameOver(game, deltaTime);
 
 		// Draw game

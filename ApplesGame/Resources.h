@@ -17,7 +17,12 @@ namespace ApplesGame {
 		std::string getResourcesPath() const;
 
 		sf::Texture playerTexture;
-		sf::Sound deathSound;
+		sf::Texture appleTexture;
+		sf::Texture rockTexture;
+		sf::SoundBuffer appleEatenSound;
+		sf::SoundBuffer deathSound;
+	//	sf::Sound appleEatenSound;
+	//	sf::Sound deathSound;
 		sf::Font font;
 	
 	private:
@@ -25,5 +30,8 @@ namespace ApplesGame {
 		float height_ = 0;
 		const std::string resourcesPath_ = "Resources/";
 	};
+
+	void SetSpriteSize(sf::Sprite& sprite, float desiredWidht, float desiredHeight);
+	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY);
 
 }

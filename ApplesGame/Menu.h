@@ -34,5 +34,4 @@ namespace ApplesGame {
 	void OptionsMenuMovement(Menu& optionsMenu, Settings& settings, const sf::Event& event);
 	void ExitMenuMovement(Menu& exitMenu, Settings& settings, const sf::Event& event, sf::RenderWindow& window);
 	void DrawMenu(Menu& mainMenu, sf::RenderWindow& window);
-
 }

@@ -3,14 +3,17 @@
 namespace ApplesGame {
 
 	struct Vector2D {
-		Vector2D(float x, float y) : x_(x), y_(y) {}
+		Vector2D() {}
+		Vector2D(float x, float y) : x(x), y(y) {}
 
-	private:
-		float x_ = 0.f;
-		float y_ = 0.f;
+		float x = 0.f;
+		float y = 0.f;
 	};
 
-	typedef Vector2D Position2D;
+	struct Position2D : public Vector2D {
+		Position2D() {}
+		Position2D(float x, float y) : Vector2D(x, y) {}
+	};
 
 	Position2D GetRandomPositionInScreen(float screenWidth, float screenHeight);
 
@@ -19,5 +22,4 @@ namespace ApplesGame {
 
 	bool IsCircusCollide(Position2D circle1Position, float circle1Radius,
 		Position2D circle2Position, float circle2Radius);
-
 }

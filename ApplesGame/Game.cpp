@@ -14,6 +14,8 @@ namespace ApplesGame {
 		optionsMenu_.init("Options", optionsButtons, 40.f);
 		exitMenu_.init("Do you want to exit?", exitButtons, 40.f);
 
+		player_.init(20.f, 100.f);
+
 		PushGameState(settings_, GameStateType::MainMenu);
 	}
 	

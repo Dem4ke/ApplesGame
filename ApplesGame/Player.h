@@ -13,22 +13,26 @@ namespace ApplesGame {
 
 	class Player {
 	public:
-		Player(Resources& resources) : resources_(resources), position_(0.f, 0.f) {}
+		Player(Resources& resources) : resources_(resources), 
+			position_(resources_.getWindowWidth() / 2.f, resources_.getWindowHeight() / 2.f) {}
 		void init(float playerSize, float playerSpeed);
 		float getSize() const;
 		float getSpeed() const;
-		Position2D getPosX() const;
-		Position2D getPosY() const;
+		float getPosX() const;
+		float getPosY() const;
+		sf::Sprite getSprite();
 
-	private:
 		float playerSize_ = 0.f;
 		float playerSpeed_ = 0.f;
-		sf::Sprite playerSprite_;
 		Position2D position_;
 		PlayerDirection direction_ = PlayerDirection::Right;
 
+	private:
+		sf::Sprite playerSprite_;
 		Resources& resources_;
 	};
 
+	void PlayerMove(Player& player, const float& deltaTime);
+	void OutOfWindow(Player& player);
 	void DrawPlayer(Player& player, sf::RenderWindow& window);
 }

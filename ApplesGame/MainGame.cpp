@@ -1,6 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include "Resources.h"
 #include "Game.h"
 
 int main() {
@@ -41,9 +38,10 @@ int main() {
 			}
 
 			// Update game state
-			game.updateGame(deltaTime, event);
+			game.updateMenu(event);
 		}
 
+		game.updateGame(deltaTime);
 	//	ApplesGame::GameOver(game, deltaTime);
 
 		// Draw game

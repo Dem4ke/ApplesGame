@@ -5,84 +5,136 @@ namespace ApplesGame {
 	// PLAYER INITIALIZATION
 
 	void Player::init(float playerSize, float playerSpeed) {
-		playerSize_ = playerSize;
-		playerSpeed_ = playerSpeed;
-		playerSprite_.setRotation(0.f);
+		// Initialization of player's characteristics
+		position_ = { resources_.getWindowWidth() / 2.f, resources_.getWindowHeight() / 2.f };
+		size_ = playerSize;
+		speed_ = playerSpeed;
+		sprite_.setRotation(0.f);
 
 		// Init player sprite
-		playerSprite_.setTexture(resources_.playerTexture);
-		SetSpriteSize(playerSprite_, playerSize_, playerSize_);
-		SetSpriteRelativeOrigin(playerSprite_, 0.5f, 0.5f);
+		sprite_.setTexture(resources_.playerTexture);
+		SetSpriteSize(sprite_, size_, size_);
+		SetSpriteRelativeOrigin(sprite_, 0.5f, 0.5f);
+
+		// Initialization of background of game
+		background_.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
+		background_.setFillColor(sf::Color::Black);
+		background_.setPosition(0.f, 0.f);
 	}
 
-	float Player::getSize() const { return playerSize_; }
+	void Player::moveRight() {
+		direction_ = PlayerDirection::Right;
+	}
 
-	float Player::getSpeed() const { return playerSize_; }
+	void Player::moveLeft() {
+		direction_ = PlayerDirection::Left;
+	}
 
-	float Player::getPosX() const { return position_.x; }
+	void Player::moveUp() {
+		direction_ = PlayerDirection::Up;
+	}
 
-	float Player::getPosY() const { return position_.y; }
+	void Player::moveDown() {
+		direction_ = PlayerDirection::Down;
+	}
 
-	sf::Sprite Player::getSprite() { return playerSprite_; }
+	void Player::speedUp() {
+		speed_ += acceleration_;
+	}
+
+	// Rotate sprite of player 
+	void Player::rotateSprite(float rotateDegree) {
+		sprite_.setRotation(rotateDegree);
+	}
+
+	// Set sprite in normal view
+	void Player::setNormalPlayerSprite() {
+		SetSpriteSize(sprite_, size_, size_);
+	}
+
+	// Set sprite in mirrored view
+	void Player::setMirrorPlayerSprite() {
+		SetSpriteSize(sprite_, -size_, size_);
+	}
+
+	// Set position to sprite
+	void Player::setSpritePosition(float x, float y) {
+		sprite_.setPosition(x, y);
+	}
+
+	float Player::getSize() const { return size_; }
+
+	float Player::getSpeed() const { return speed_; }
+
+	sf::RectangleShape Player::getBackground() const { return background_; }
+	
+	sf::Sprite Player::getSprite() const { return sprite_; }
+
+	PlayerDirection Player::getDirection() const { return direction_; }
 
 	// FUNCTIONS
 	
 	// Player movement
 	void PlayerMove(Player& player, const float& deltaTime) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			game.player.direction = PlayerDirection::Right;
+			player.moveRight();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			game.player.direction = PlayerDirection::Up;
+			player.moveUp();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			game.player.direction = PlayerDirection::Left;
+			player.moveLeft();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			game.player.direction = PlayerDirection::Down;
+			player.moveDown();
 		}
 
-		switch (game.player.direction) {
+		// Change player "speed" direction to move player
+		switch (player.getDirection()) {
 		case PlayerDirection::Right: {
-			game.player.position.x += game.player.speed * deltaTime;
+			player.position_.x += player.getSpeed() * deltaTime;
 			break;
 		}
 		case PlayerDirection::Up: {
-			game.player.position.y -= game.player.speed * deltaTime;
+			player.position_.y -= player.getSpeed() * deltaTime;
 			break;
 		}
 		case PlayerDirection::Left: {
-			game.player.position.x -= game.player.speed * deltaTime;
+			player.position_.x -= player.getSpeed() * deltaTime;
 			break;
 		}
 		case PlayerDirection::Down: {
-			game.player.position.y += game.player.speed * deltaTime;
+			player.position_.y += player.getSpeed() * deltaTime;
 			break;
 		}
 		}
 	}
 	
 	// Window border collision
-	void OutOfWindow(Player& player) {
-		if (game.player.position.x + PLAYER_SIZE / 2.f > SCREEN_WIDTH || game.player.position.x - PLAYER_SIZE / 2.f < 0.f ||
-			game.player.position.y + PLAYER_SIZE / 2.f > SCREEN_HEIGHT || game.player.position.y - PLAYER_SIZE / 2.f < 0.f) {
-			GameOverSound(game.resources, game);
-			game.gameState |= Game::GameState::isGameOver;
-			game.gameOverTime = 0;
+	void OutOfWindow(Player& player, Resources& resources, Settings& settings) {
+		if (player.position_.x + player.getSize() / 2.f > resources.getWindowWidth() || 
+			player.position_.x - player.getSize() / 2.f < 0.f ||
+			player.position_.y + player.getSize() / 2.f > resources.getWindowHeight() ||
+			player.position_.y - player.getSize() / 2.f < 0.f) {
+
+			GameOverSound(resources);
+			PushGameState(settings, GameStateType::GameOver);
 		}
 	}
 
 	void DrawPlayer(Player& player, sf::RenderWindow& window) {
-		player.sprite.setPosition(player.position.x, player.position.y);
-		window.draw(player.sprite);
+		window.draw(player.getBackground());
+		player.setSpritePosition(player.position_.x, player.position_.y);
+		window.draw(player.getSprite());
+
 		// Orient player sprite according to player direction
-		if (player.direction == PlayerDirection::Left) {
-			SetSpriteSize(player.sprite, -PLAYER_SIZE, PLAYER_SIZE);
-			player.sprite.setRotation(0.f);
+		if (player.getDirection() == PlayerDirection::Left) {
+			player.setMirrorPlayerSprite();
+			player.rotateSprite(0.f);
 		}
 		else {
-			SetSpriteSize(player.sprite, PLAYER_SIZE, PLAYER_SIZE);
-			player.sprite.setRotation((float)player.direction * -90.f);
+			player.setNormalPlayerSprite();
+			player.rotateSprite(static_cast <int> (player.getDirection()) * -90);
 		}
 	}
 }

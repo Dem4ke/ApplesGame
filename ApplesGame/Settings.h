@@ -28,4 +28,5 @@ namespace ApplesGame {
 
 	void PushGameState(Settings& settings, GameStateType newType);
 	void PopGameState(Settings& settings);
+	void RestartGameState(Settings& settings);
 }

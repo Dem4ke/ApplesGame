@@ -3,17 +3,12 @@
 namespace ApplesGame {
 
 	struct Vector2D {
-		Vector2D() {}
-		Vector2D(float x, float y) : x(x), y(y) {}
 
 		float x = 0.f;
 		float y = 0.f;
 	};
 
-	struct Position2D : public Vector2D {
-		Position2D() {}
-		Position2D(float x, float y) : Vector2D(x, y) {}
-	};
+	typedef Vector2D Position2D;
 
 	Position2D GetRandomPositionInScreen(float screenWidth, float screenHeight);
 

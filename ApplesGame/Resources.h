@@ -21,8 +21,7 @@ namespace ApplesGame {
 		sf::Texture rockTexture;
 		sf::SoundBuffer appleEatenSound;
 		sf::SoundBuffer deathSound;
-	//	sf::Sound appleEatenSound;
-	//	sf::Sound deathSound;
+		sf::Sound sound;
 		sf::Font font;
 	
 	private:
@@ -33,5 +32,6 @@ namespace ApplesGame {
 
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidht, float desiredHeight);
 	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY);
-
+	void AppleEatenSound(Resources& resources);
+	void GameOverSound(Resources& resources);
 }

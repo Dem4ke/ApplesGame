@@ -23,7 +23,7 @@ namespace ApplesGame {
 
 	// Load fonts from resources path
 	void Resources::setFont() {
-		assert(font.loadFromFile(resourcesPath_ + "\\Fonts\\Roboto-Regular.ttf"));
+		assert(font.loadFromFile(resourcesPath_ + "Fonts/Roboto-Regular.ttf"));
 	}
 
 	float Resources::getWindowWidth() const { return width_; }
@@ -41,5 +41,19 @@ namespace ApplesGame {
 	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY) {
 		sf::FloatRect spriteRect = sprite.getLocalBounds();
 		sprite.setOrigin(sf::Vector2f(originX * spriteRect.width, originY * spriteRect.height));
+	}
+
+	// Init sounds of eat an apples
+	void AppleEatenSound(Resources& resources) {
+		resources.sound.setBuffer(resources.appleEatenSound);
+		resources.sound.setVolume(5.f);
+		resources.sound.play();
+	}
+
+	// Init game over sound
+	void GameOverSound(Resources& resources) {
+		resources.sound.setBuffer(resources.deathSound);
+		resources.sound.setVolume(5.f);
+		resources.sound.play();
 	}
 }

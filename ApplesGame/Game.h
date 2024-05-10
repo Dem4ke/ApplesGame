@@ -1,8 +1,8 @@
 #pragma once
-#include "Resources.h"
 #include "Menu.h"
 #include "Player.h"
-#include "Settings.h"
+#include "Apple.h"
+#include "Rock.h"
 
 namespace ApplesGame {
 
@@ -12,17 +12,24 @@ namespace ApplesGame {
 
 		void initGame();
 		void restartGame();
-		void updateGame( const float& deltaTime, sf::Event& event);
+		void updateMenu(sf::Event& event);
+		void updateGame(const float& deltaTime);
 		void gameOver(const float& deltaTime);
 		void drawGame();
 		
 	private:
 		sf::RenderWindow& window_;
 		Resources& resources_;
+
 		Menu mainMenu_;
 		Menu optionsMenu_;
 		Menu exitMenu_;
+		Menu pauseMenu_;
+		Menu gameOverMenu_;
 		Player player_;
+		Apple apple_;
+		Rock rock_;
+		std::vector<Rock> fieldOfRocks_;
 		Settings settings_;
 	};
 }

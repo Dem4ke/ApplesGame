@@ -8,9 +8,9 @@ namespace ApplesGame {
 		float posY = resources_.getWindowHeight() / 3.f;
 
 		// Initialization of background of menu
-		background.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
-		background.setFillColor(sf::Color::Black);
-		background.setPosition(0.f, 0.f);
+		background_.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
+		background_.setFillColor(sf::Color::Black);
+		background_.setPosition(0.f, 0.f);
 
 		// Initialization of name of a game
 		menuName_.setFont(resources_.font);
@@ -75,7 +75,7 @@ namespace ApplesGame {
 
 	sf::Text Menu::getGeneralName() const { return menuName_; }
 
-	sf::RectangleShape Menu::getBackground() const { return background; }
+	sf::RectangleShape Menu::getBackground() const { return background_; }
 
 	void Menu::changeButton(int num, std::string change) { buttons_[num].setString(change); }
 
@@ -165,6 +165,35 @@ namespace ApplesGame {
 					PopGameState(settings);
 				}
 			}
+		}
+	}
+
+	void PauseMenuMovement(Menu& pauseMenu, Settings& settings, const sf::Event& event) {
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Up) {
+				pauseMenu.moveUp();
+			}
+			else if (event.key.code == sf::Keyboard::Down) {
+				pauseMenu.moveDown();
+			}
+			else if (event.key.code == sf::Keyboard::Escape) {
+				PopGameState(settings);
+			}
+			else if (event.key.code == sf::Keyboard::Enter) {
+				if (pauseMenu.getSelectedButton() == 0) {
+					PopGameState(settings);
+					PopGameState(settings);
+				}
+				else if (pauseMenu.getSelectedButton() == 1) {
+					PopGameState(settings);
+				}
+			}
+		}
+	}
+
+	void ExitInPauseMenu(Settings& settings) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+			PushGameState(settings, GameStateType::Pause);
 		}
 	}
 

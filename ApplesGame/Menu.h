@@ -25,7 +25,7 @@ namespace ApplesGame {
 
 		std::vector<sf::Text> buttons_;
 		sf::Text menuName_;
-		sf::RectangleShape background;
+		sf::RectangleShape background_;
 		
 		Resources& resources_;
 	};
@@ -33,5 +33,7 @@ namespace ApplesGame {
 	void MainMenuMovement(Menu& mainMenu, Settings& settings, const sf::Event& event);
 	void OptionsMenuMovement(Menu& optionsMenu, Settings& settings, const sf::Event& event);
 	void ExitMenuMovement(Menu& exitMenu, Settings& settings, const sf::Event& event, sf::RenderWindow& window);
+	void PauseMenuMovement(Menu& pauseMenu, Settings& settings, const sf::Event& event);
+	void ExitInPauseMenu(Settings& settings);
 	void DrawMenu(Menu& mainMenu, sf::RenderWindow& window);
 }

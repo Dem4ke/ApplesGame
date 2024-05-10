@@ -28,6 +28,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apple.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

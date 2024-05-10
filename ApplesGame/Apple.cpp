@@ -43,10 +43,12 @@ namespace ApplesGame {
 	// Differents versions of collision with apples
 	
 	// Infinite apples and player without acceleration
-	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples) {
+	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, UI& UI) {
 		for (auto& apple : fieldOfApples) {
 			if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
-				++eatenApples;
+				settings.appleIncrease();
+				UI.appleCountUpdate(settings);
+
 				apple.getRandomPosition();
 				AppleEatenSound(resources);
 			}
@@ -54,10 +56,12 @@ namespace ApplesGame {
 	}
 
 	// Infinite apples and player with acceleration
-	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples) {
+	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, UI& UI) {
 		for (auto& apple : fieldOfApples) {
 			if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
-				++eatenApples;
+				settings.appleIncrease();
+				UI.appleCountUpdate(settings);
+
 				apple.getRandomPosition();
 				player.speedUp();
 				AppleEatenSound(resources);
@@ -66,29 +70,33 @@ namespace ApplesGame {
 	}
 
 	// Limited apples and player with acceleration
-	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples) {
+	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, UI& UI) {
 		for (auto& apple : fieldOfApples) {
 			if (!apple.isAppleEaten()) {
 				if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
-					++eatenApples;
+					settings.appleIncrease();
+					UI.appleCountUpdate(settings);
+
 					apple.appleEaten();
 					AppleEatenSound(resources);
 				}
 			}
 		}
 
-		if (eatenApples == allApples) {
+		if (settings.eatenApples_ == settings.numOfApples) {
 			PushGameState(settings, GameStateType::GameOver);
 			GameOverSound(resources);
 		}
 	}
 
 	// Limited apples and player without acceleration
-	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples) {
+	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, UI& UI) {
 		for (auto& apple : fieldOfApples) {
 			if (!apple.isAppleEaten()) {
 				if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
-					++eatenApples;
+					settings.appleIncrease();
+					UI.appleCountUpdate(settings);
+
 					apple.appleEaten();
 					player.speedUp();
 					AppleEatenSound(resources);
@@ -96,7 +104,7 @@ namespace ApplesGame {
 			}
 		}
 
-		if (eatenApples == allApples) { 
+		if (settings.eatenApples_ == settings.numOfApples) {
 			PushGameState(settings, GameStateType::GameOver);
 			GameOverSound(resources);
 		}

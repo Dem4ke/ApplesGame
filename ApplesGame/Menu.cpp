@@ -79,6 +79,81 @@ namespace ApplesGame {
 
 	void Menu::changeButton(int num, std::string change) { buttons_[num].setString(change); }
 
+	// LEADER BOAED INITIALIZATION
+
+	void LeaderBoard::init(std::string menuName, float buttonSize, Settings& settings) {
+		posX_ = resources_.getWindowWidth() / 2.f;
+		posY_ = resources_.getWindowHeight() / 3.f;
+		buttonSize_ = buttonSize;
+
+		// Initialization of name of a game
+		menuName_.setFont(resources_.font);
+		menuName_.setCharacterSize(buttonSize_ * 1.5f);
+		menuName_.setFillColor(sf::Color::Red);
+		menuName_.setString(menuName);
+		menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
+		menuName_.setPosition(posX_, posY_ - buttonSize_);
+
+		// Initialization of players names
+		playerName_.setFont(resources_.font);
+		playerName_.setCharacterSize(buttonSize_);
+		playerName_.setFillColor(sf::Color::White);
+
+		// Initialization of players score
+		playerScore_.setFont(resources_.font);
+		playerScore_.setCharacterSize(buttonSize_);
+		playerScore_.setFillColor(sf::Color::White);
+
+		table_["Hydra"] = settings.numOfApples;
+		table_["Dominatus"] = settings.numOfApples - (settings.numOfApples / 4);
+		table_["Alpha"] = settings.numOfApples / 2;
+		table_["Omega"] = 1;
+		table_["Player"] = 0;
+
+		sortTable(settings);
+	}
+
+	void LeaderBoard::sortTable(Settings& settings) {
+		float space = buttonSize_;
+
+		table_["Player"] = settings.eatenApples_;
+
+		auto cmp = [](std::pair<std::string, int> const& a, std::pair<std::string, int> const& b) {
+			return a.second > b.second;
+		};
+
+		tableText_.clear();
+		for (const auto& player : table_) {
+			tableText_.push_back(player);
+		}
+
+		std::sort(begin(tableText_), end(tableText_), cmp);
+
+		liderBoard_.clear();
+		for (const auto& player : tableText_) {
+			playerName_.setString(player.first);
+			playerScore_.setString(std::to_string(player.second));
+
+			playerName_.setOrigin(sf::Vector2f(playerName_.getGlobalBounds().width / 2.f, playerName_.getGlobalBounds().height / 2.f));
+			playerScore_.setOrigin(sf::Vector2f(playerScore_.getGlobalBounds().width / 2.f, playerScore_.getGlobalBounds().height / 2.f));
+
+			playerName_.setPosition(posX_, posY_ + space * 1.2f);
+			playerScore_.setPosition(posX_ + buttonSize_ * 4.f, posY_ + space * 1.2f);
+
+			liderBoard_.push_back({ playerName_ , playerScore_ });
+
+			space += buttonSize_;
+		}
+	}
+
+	size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
+
+	sf::Text LeaderBoard::getName(int num) const { return liderBoard_[num].first; }
+
+	sf::Text LeaderBoard::getScore(int num) const { return liderBoard_[num].second; }
+
+	sf::Text LeaderBoard::getGeneralName() const { return menuName_; }
+
 	// FUNCTIONS
 
 	void MainMenuMovement(Menu& mainMenu, Settings& settings, const sf::Event& event) {
@@ -168,6 +243,14 @@ namespace ApplesGame {
 		}
 	}
 
+	void LeaderBoardMovement(LeaderBoard& leaderBoard, Settings& settings, const sf::Event& event) {
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Escape) {
+				PopGameState(settings);
+			}
+		}
+	}
+
 	void PauseMenuMovement(Menu& pauseMenu, Settings& settings, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Up) {
@@ -190,6 +273,17 @@ namespace ApplesGame {
 		}
 	}
 
+	void GameOverMenuMovement(Menu& gameOverMenu, Settings& settings, const sf::Event& event) {
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Enter) {
+				PushGameState(settings, GameStateType::GameReset);
+			}
+			else if (event.key.code == sf::Keyboard::Escape) {
+				PushGameState(settings, GameStateType::GameReset);
+			}
+		}
+	}
+
 	void ExitInPauseMenu(Settings& settings) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			PushGameState(settings, GameStateType::Pause);
@@ -201,6 +295,14 @@ namespace ApplesGame {
 		window.draw(menu.getGeneralName());
 		for (int i = 0, it = menu.getButtonsCount(); i < it; ++i) {
 			window.draw(menu.getButton(i));
+		}
+	}
+
+	void DrawLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window) {
+		window.draw(leaderBoard.getGeneralName());
+		for (int i = 0, it = leaderBoard.getPositionsCount(); i < it; ++i) {
+			window.draw(leaderBoard.getName(i));
+			window.draw(leaderBoard.getScore(i));
 		}
 	}
 }

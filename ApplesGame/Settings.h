@@ -22,6 +22,9 @@ namespace ApplesGame {
 
 	// Settings 
 	struct Settings {
+
+		void appleIncrease();
+
 		char gameSettings = 3;
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStates;

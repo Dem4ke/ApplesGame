@@ -2,6 +2,10 @@
 
 namespace ApplesGame {
 	
+	void Settings::appleIncrease() {
+		++eatenApples_;
+	}
+
 	// Add a new game state in "game states stack"
 	void PushGameState(Settings& settings, GameStateType newType) {
 		settings.gameStates.push_back(newType);

@@ -2,4 +2,112 @@
 
 namespace ApplesGame {
 
+	// ROCK INITIALIZATION
+
+	void Apple::init(float size) {
+		size_ = size;
+		getRandomPosition();
+
+		sprite_.setTexture(resources_.appleTexture);
+
+		SetSpriteSize(sprite_, size_, size_);
+		SetSpriteRelativeOrigin(sprite_, 0.5f, 0.5f);
+	}
+
+	void Apple::appleEaten() { isAppleEaten_ = true; }
+
+	void Apple::getRandomPosition() {
+		position_ = GetRandomPositionInScreen(resources_.getWindowWidth(), resources_.getWindowHeight());
+		sprite_.setPosition(position_.x, position_.y);
+	}
+
+	float Apple::getSize() const { return size_; }
+
+	bool Apple::isAppleEaten() const { return isAppleEaten_; }
+
+	sf::Sprite Apple::getSprite() const { return sprite_; }
+
+	// FUNCTIONS
+
+	// Initialization of array of apple, take one Apple class object and make array of them
+	void ApplesFieldInit(Apple& apple, std::vector<Apple>& fieldOfApples, float size, int num) {
+		// Clear field
+		fieldOfApples.clear();
+		// Init new field
+		for (int i = 0; i < num; ++i) {
+			apple.init(size);
+			fieldOfApples.push_back(apple);
+		}
+	}
+
+	// Differents versions of collision with apples
+	
+	// Infinite apples and player without acceleration
+	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples) {
+		for (auto& apple : fieldOfApples) {
+			if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
+				++eatenApples;
+				apple.getRandomPosition();
+				AppleEatenSound(resources);
+			}
+		}
+	}
+
+	// Infinite apples and player with acceleration
+	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples) {
+		for (auto& apple : fieldOfApples) {
+			if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
+				++eatenApples;
+				apple.getRandomPosition();
+				player.speedUp();
+				AppleEatenSound(resources);
+			}
+		}
+	}
+
+	// Limited apples and player with acceleration
+	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples) {
+		for (auto& apple : fieldOfApples) {
+			if (!apple.isAppleEaten()) {
+				if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
+					++eatenApples;
+					apple.appleEaten();
+					AppleEatenSound(resources);
+				}
+			}
+		}
+
+		if (eatenApples == allApples) {
+			PushGameState(settings, GameStateType::GameOver);
+			GameOverSound(resources);
+		}
+	}
+
+	// Limited apples and player without acceleration
+	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples) {
+		for (auto& apple : fieldOfApples) {
+			if (!apple.isAppleEaten()) {
+				if (IsCircusCollide(player.position_, player.getSize(), apple.position_, apple.getSize())) {
+					++eatenApples;
+					apple.appleEaten();
+					player.speedUp();
+					AppleEatenSound(resources);
+				}
+			}
+		}
+
+		if (eatenApples == allApples) { 
+			PushGameState(settings, GameStateType::GameOver);
+			GameOverSound(resources);
+		}
+	}
+
+	// Draw apple
+	void DrawApples(std::vector<Apple>& fieldOfApples, sf::RenderWindow& window) {
+		for (auto& apple : fieldOfApples) {
+			if (!apple.isAppleEaten()) {
+				window.draw(apple.getSprite());
+			}
+		}
+	}
 }

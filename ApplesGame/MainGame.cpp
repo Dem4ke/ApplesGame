@@ -42,7 +42,7 @@ int main() {
 		}
 
 		game.updateGame(deltaTime);
-	//	ApplesGame::GameOver(game, deltaTime);
+		game.gameOver(deltaTime);
 
 		// Draw game
 		window.clear();

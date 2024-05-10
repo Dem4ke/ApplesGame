@@ -6,6 +6,7 @@ namespace ApplesGame {
 
 	void Player::init(float playerSize, float playerSpeed) {
 		// Initialization of player's characteristics
+		direction_ = PlayerDirection::Right;
 		position_ = { resources_.getWindowWidth() / 2.f, resources_.getWindowHeight() / 2.f };
 		size_ = playerSize;
 		speed_ = playerSpeed;

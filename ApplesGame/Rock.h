@@ -20,7 +20,7 @@ namespace ApplesGame {
 		Resources& resources_;
 	};
 
-	void RockInit(Rock& rock, std::vector<Rock>& fieldOfRocks, float size, int num);
-	void RockCollision(Rock& rock, Player& player, Resources& resources, Settings& settings);
-	void DrawRocks(Rock& rock, sf::RenderWindow& window);
+	void RocksFieldInit(Rock& rock, std::vector<Rock>& fieldOfRocks, float size, int num);
+	void RockCollision(std::vector<Rock>& fieldOfRocks, Player& player, Resources& resources, Settings& settings);
+	void DrawRocks(std::vector<Rock>& fieldOfRocks, sf::RenderWindow& window);
 }

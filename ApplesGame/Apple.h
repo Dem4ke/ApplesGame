@@ -7,9 +7,27 @@ namespace ApplesGame {
 	public:
 		Apple(Resources& resources) : resources_(resources) {}
 
-//		void init(float size, int num);
-	private:
+		void init(float size);
+		void appleEaten();
+		void getRandomPosition();
 
+		float getSize() const;
+		bool isAppleEaten() const;
+		sf::Sprite getSprite() const;
+
+		Position2D position_;
+
+	private:
+		float size_ = 0.f;
+		bool isAppleEaten_ = false;
+		sf::Sprite sprite_;
 		Resources& resources_;
 	};
+
+	void ApplesFieldInit(Apple& apple, std::vector<Apple>& fieldOfApples, float size, int num);
+	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples);
+	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, int& eatenApples);
+	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples);
+	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, Settings& settings, int& eatenApples, int& allApples);
+	void DrawApples(std::vector<Apple>& fieldOfApples, sf::RenderWindow& window);
 }

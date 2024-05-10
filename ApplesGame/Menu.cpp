@@ -181,8 +181,7 @@ namespace ApplesGame {
 			}
 			else if (event.key.code == sf::Keyboard::Enter) {
 				if (pauseMenu.getSelectedButton() == 0) {
-					PopGameState(settings);
-					PopGameState(settings);
+					PushGameState(settings, GameStateType::GameReset);
 				}
 				else if (pauseMenu.getSelectedButton() == 1) {
 					PopGameState(settings);

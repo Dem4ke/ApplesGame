@@ -21,19 +21,21 @@ namespace ApplesGame {
 
 	// FUNCTIONS
 
-	void RockInit(Rock& rock, std::vector<Rock>& fieldOfRocks, float size, int num) {
+	// Initialization of array of rocks, take one Rock class object and make array of them
+	void RocksFieldInit(Rock& rock, std::vector<Rock>& fieldOfRocks, float size, int num) {
+		// Clear field
+		fieldOfRocks.clear();
+		// Init new field
 		for (int i = 0; i < num; ++i) {
 			rock.init(size);
 			fieldOfRocks.push_back(rock);
 		}
 	}
 
-	void RockCollision(std::vector<Rock>& rocks, Player& player, Resources& resources, Settings& settings) {
-		int end = rock.getNumsOfRocks();
-
-		for (int i = 0; i < end; ++i) {
-			if (IsRectanglesCollide(player.position_, { player.getSize(), player.getSize() },
-				rock.getPosition(i), {rock.getSize(), rock.getSize()})) {
+	// Check player collision with any rock
+	void RockCollision(std::vector<Rock>& fieldOfRocks, Player& player, Resources& resources, Settings& settings) {
+		for (auto& rock : fieldOfRocks) {
+			if (IsCircusCollide(player.position_, player.getSize(), rock.position_, rock.getSize())) {
 
 				GameOverSound(resources);
 				PushGameState(settings, GameStateType::GameOver);
@@ -41,9 +43,10 @@ namespace ApplesGame {
 		}
 	}
 
-	void DrawRocks(std::vector<Rock>& rocks, sf::RenderWindow& window) {
-		for (auto& i : rock.rocks_) {
-			window.draw(i.sprite_);
+	// Draw rocks
+	void DrawRocks(std::vector<Rock>& fieldOfRocks, sf::RenderWindow& window) {
+		for (auto& rock : fieldOfRocks) {
+			window.draw(rock.getSprite());
 		}
 	}
 }

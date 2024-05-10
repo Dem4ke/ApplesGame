@@ -30,6 +30,16 @@ namespace ApplesGame {
 		Resources& resources_;
 	};
 
+	class LeaderBoard {
+	public:
+
+		LeaderBoard(Resources& resources) : resources_(resources) {}
+	
+	private:
+
+		Resources& resources_;
+	};
+
 	void MainMenuMovement(Menu& mainMenu, Settings& settings, const sf::Event& event);
 	void OptionsMenuMovement(Menu& optionsMenu, Settings& settings, const sf::Event& event);
 	void ExitMenuMovement(Menu& exitMenu, Settings& settings, const sf::Event& event, sf::RenderWindow& window);

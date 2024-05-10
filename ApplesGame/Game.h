@@ -26,10 +26,14 @@ namespace ApplesGame {
 		Menu exitMenu_;
 		Menu pauseMenu_;
 		Menu gameOverMenu_;
+
 		Player player_;
 		Apple apple_;
 		Rock rock_;
+		
+		std::vector<Apple> fieldOfApples_;
 		std::vector<Rock> fieldOfRocks_;
+		
 		Settings settings_;
 	};
 }

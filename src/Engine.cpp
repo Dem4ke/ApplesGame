@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Engine.h"
 #include <cstdlib>
+#include <cmath>
 
 namespace ApplesGame {
 

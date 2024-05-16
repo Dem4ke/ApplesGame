@@ -4,8 +4,8 @@ project(ApplesGame
         VERSION 1.0.0
         LANGUAGES CXX)
 
-if(CMAKE_GENERATOR STREQUAL "Ninja"
-     AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.24)
+if((CMAKE_GENERATOR STREQUAL "Ninja")
+   AND (CMAKE_VERSION VERSION_GREATER_EQUAL 3.24))
   set(CMAKE_COLOR_DIAGNOSTICS On) 
 endif()
 
@@ -15,31 +15,22 @@ set(CMAKE_CXX_EXTENSIONS Off)
 set(PRJ_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(PRJ_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-# move to differen directory later
-set(SRC_FILES 
-      ${PRJ_SRC_DIR}/Apple.cpp
-      ${PRJ_SRC_DIR}/Engine.cpp
-      ${PRJ_SRC_DIR}/Game.cpp
-      ${PRJ_SRC_DIR}/Menu.cpp
-      ${PRJ_SRC_DIR}/Player.cpp
-      ${PRJ_SRC_DIR}/Resources.cpp
-      ${PRJ_SRC_DIR}/Rock.cpp
-      ${PRJ_SRC_DIR}/Settings.cpp
-      ${PRJ_SRC_DIR}/UI.cpp)
-
 add_executable(ApplesGame
                 ${CMAKE_CURRENT_SOURCE_DIR}/MainGame.cpp)
 
-target_sources(ApplesGame
-                PRIVATE ${SRC_FILES})
+add_subdirectory(${PRJ_SRC_DIR})
 
 target_include_directories(ApplesGame
                             PRIVATE ${PRJ_INCLUDE_DIR})
 
+if(NOT DEFINED PRJ_SFML_VERSION)
+  set(PRJ_SFML_VERSION 2.6.x)
+endif()
+
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x)
+    GIT_TAG ${PRJ_SFML_VERSION})
 FetchContent_MakeAvailable(SFML)
 
 target_link_libraries(ApplesGame
